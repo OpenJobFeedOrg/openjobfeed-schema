@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "company": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "about": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "registeredLocation": {
+          "type": "object",
+          "properties": {
+            "country": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" }
+          },
+          "required": ["country"]
+        }
+      },
+      "required": ["name", "url", "registeredLocation"]
+    },
+    "jobs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "department": { "type": "string" },
+          "locations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "country": { "type": "string" },
+                "city": { "type": "string" },
+                "state": { "type": "string" },
+                "type": {
+                  "type": "string",
+                  "enum": ["ON-SITE", "REMOTE", "HYBRID"]
+                }
+              },
+              "required": ["country", "type"]
+            }
+          },
+          "salary": {
+            "type": "object",
+            "properties": {
+              "minAmount": { "type": "number", "minimum": 0 },
+              "maxAmount": { "type": "number", "minimum": 0 },
+              "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+              "period": { "type": "string", "enum": ["YEAR", "MONTH", "HOUR"] }
+            },
+            "required": ["minAmount", "maxAmount", "currency", "period"]
+          },
+          "requirements": {
+            "type": "object",
+            "properties": {
+              "experience": { "type": "string" },
+              "skills": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "employmentType": {
+            "type": "string",
+            "enum": ["FULL_TIME", "PART_TIME", "CONTRACT", "INTERNSHIP"]
+          },
+          "datePosted": { "type": "string", "format": "date" },
+          "dateValidUntil": { "type": "string", "format": "date" },
+          "dateUpdated": { "type": "string", "format": "date" },
+          "url": { "type": "string", "format": "uri" },
+          "applyUrl": { "type": "string", "format": "uri" }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "department",
+          "locations",
+          "salary",
+          "employmentType",
+          "datePosted",
+          "dateValidUntil",
+          "dateUpdated",
+          "url",
+          "applyUrl"
+        ]
+      }
+    }
+  },
+  "required": ["version", "company", "jobs"]
+}
